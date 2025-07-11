@@ -1,17 +1,6 @@
-name: dispatch-workflow
-
-on:
- push:
-   branches:
-     - main
-
 jobs:
- dispatch:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Trigger repository dispatch
-       uses: peter-evans/repository-dispatch@v1
-       with:
-         token: ${{ secrets.GH_PAT }}
-         repository: woodgeon/Programmers_Badge_Generator
-         event-type: trigger-workflow
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Complete job
+        run: echo "No dispatch needed. Job complete."
