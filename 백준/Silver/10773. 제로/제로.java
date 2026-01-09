@@ -1,0 +1,27 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int k = Integer.parseInt(br.readLine());
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < k; i++) {
+            int n = Integer.parseInt(br.readLine());
+            if (n == 0) {
+                stack.pop();
+            }
+            else {
+                stack.push(n);
+            }
+        }
+        int sum = 0;
+        while (!stack.isEmpty()) {
+            sum += stack.pop();
+        }
+        System.out.println(sum);
+
+    }
+}
