@@ -1,0 +1,33 @@
+name: Move LeetCode Files
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  move:
+    runs-on: ubuntu-latest
+
+    # 무한 루프 방지
+    if: "!contains(github.event.head_commit.message, 'Auto move')"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Move LeetHub files
+        run: |
+          mkdir -p LeetCode
+          
+          for dir in */ ; do
+            if [[ "$dir" != "LeetCode/" && "$dir" =~ [0-9] ]]; then
+              mv "$dir" LeetCode/
+            fi
+          done
+
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Auto move LeetHub files" || echo "No changes"
+          git push
