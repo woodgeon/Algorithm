@@ -26,12 +26,12 @@ jobs:
 
       - name: Commit & Push
         run: |
-          - run: git config user.name "github-actions"
-          - run: git config user.email "github-actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-          - run: git pull origin main --rebase
+          git pull origin main --rebase
 
-          - run: git add .
-          - run: git commit -m "Auto move LeetHub files" || echo "No changes"
+          git add .
+          git commit -m "Auto move LeetHub files" || echo "No changes"
 
-          - run: git push origin main
+          git push origin main
