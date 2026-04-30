@@ -48,7 +48,5 @@ jobs:
 
           git commit -m "Auto move LeetHub files"
 
-          # rebase 실패 대비
-          git pull origin main --rebase || echo "Rebase skipped"
-
-          git push origin main
+          # 🔥 핵심: pull 제거 + 충돌 방지 push
+          git push origin main --force-with-lease
