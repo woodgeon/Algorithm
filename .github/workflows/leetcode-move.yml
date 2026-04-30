@@ -15,14 +15,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0   # rebase 가능하게 전체 히스토리 가져오기
+          fetch-depth: 0
 
       - name: Move LeetHub files
         run: |
           mkdir -p LeetCode
           
           for dir in */ ; do
-            if [[ "$dir" != "LeetCode/" && "$dir" =~ [0-9] ]]; then
+            # LeetCode 폴더 제외 + 숫자로 시작하는 폴더만 처리
+            if [[ "$dir" != "LeetCode/" && "$dir" =~ ^[0-9] ]]; then
+              target="LeetCode/${dir%/}"
+
+              # 이미 존재하면 삭제 (충돌 방지)
+              rm -rf "$target"
+
               mv "$dir" LeetCode/
             fi
           done
@@ -34,7 +40,7 @@ jobs:
 
           git add .
 
-          # 변경 없으면 skip
+          # 변경 없으면 종료
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
@@ -42,7 +48,7 @@ jobs:
 
           git commit -m "Auto move LeetHub files"
 
-          # 최신 기준으로 rebase
-          git pull origin main --rebase
+          # rebase 실패 대비
+          git pull origin main --rebase || echo "Rebase skipped"
 
           git push origin main
