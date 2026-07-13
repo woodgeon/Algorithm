@@ -1,41 +1,60 @@
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 class Solution {
-    private static boolean isValidMove(int nx, int ny) { // 0이나 10을 벗어날 경우 false return
-        return 0 <= nx && nx < 11 && 0 <= ny && ny < 11;
-    }
-    
-    private static final HashMap<Character, int[]> location = new HashMap<>();
-    
-    private static void initLocation() {
-        location.put('U', new int[]{0, 1});
-        location.put('D', new int[]{0, -1});
-        location.put('L', new int[]{-1, 0});
-        location.put('R', new int[]{1, 0});
-    }
-    
     public int solution(String dirs) {
-        initLocation(); // 위치정보를 초기화 하는 함수
-        int x = 5, y = 5;
-        HashSet<String> answer = new HashSet<>(); // 겹치는 좌표는 1개로 처리하기 위함
+        int[] dx = {0, 1, 0, -1};
+        int[] dy = {1, 0, -1, 0};
+        
+        int answer = 0;
+        
+        boolean[][][][] visited = new boolean[11][11][11][11];
+        
+        int cx = 5;
+        int cy = 5;
         
         for (int i = 0; i < dirs.length(); i++) {
-            int[] offset = location.get(dirs.charAt(i)); // HashMap으로 선언된 좌표 결정 변수인 location에서 해당 명령을 통해 좌표를 가져옴.
-            int nx = x + offset[0];
-            int ny = y + offset[1];
+            char dir = dirs.charAt(i);
+            int dirNum = dirNum(dir);
             
-            if (!isValidMove(nx, ny)) // 범위를 벗어난 좌표일 경우 다음 루프로 넘어감
-                continue;
+            int nx = cx + dx[dirNum];
+            int ny = cy + dy[dirNum];
             
-            answer.add(x + " " + y + " "+ nx + " " + ny);
-            answer.add(nx + " " + ny + " "+ x + " " + y);
+            if (isRange(nx, ny)) {
+                if (!visited[cx][cy][nx][ny]) {
+                    answer++;
+                    visited[cx][cy][nx][ny] = true;
+                    visited[nx][ny][cx][cy] = true;
+                }
+                cx = nx;
+                cy = ny;
+            }
             
-            // 이동했으니 좌표를 변경해주어야함.
-            x = nx;
-            y = ny;
+        }
+
+        return answer;
+    }
+    
+    public int dirNum(char dir) {
+        int dirNum = 0;
+        
+        if (dir == 'U') {
+            dirNum = 0;
+        }
+        else if (dir == 'R') {
+            dirNum = 1;
+        }
+        else if (dir == 'D') {
+            dirNum = 2;
+        }
+        else {
+            dirNum = 3;
         }
         
-        return answer.size() / 2;
+        return dirNum;
+    }
+    
+    public boolean isRange(int nx, int ny) {
+        return 0 <= nx && nx < 11 &&
+            0 <= ny && ny < 11;
     }
 }
