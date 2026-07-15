@@ -16,11 +16,11 @@ public class Main {
         int n = sc.nextInt();
         int k = sc.nextInt();
 
-        grid = new int[n][n];
-        visited = new boolean[n][n];
+        grid = new int[n + 1][n + 1];
+        visited = new boolean[n + 1][n + 1];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
                 grid[i][j] = sc.nextInt();
             }
         }
@@ -29,7 +29,7 @@ public class Main {
             int startX = sc.nextInt();
             int startY = sc.nextInt();
 
-            bfs(startX - 1, startY - 1, n);
+            bfs(startX, startY, n);
         }
 
         System.out.print(count);
@@ -72,6 +72,6 @@ public class Main {
     }
 
     static boolean isRange(int nx, int ny, int n) {
-        return 0 <= nx && nx < n && 0 <= ny && ny < n;
+        return 0 < nx && nx <= n && 0 < ny && ny <= n;
     }
 }
