@@ -42,6 +42,9 @@ public class Main {
             visited[startX][startY] = true;
             count++;
         }
+        else {
+            return;
+        }
         
         deque.offerLast(new int[]{startX, startY});
 
