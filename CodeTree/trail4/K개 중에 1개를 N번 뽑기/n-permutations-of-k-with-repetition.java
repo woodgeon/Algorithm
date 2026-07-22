@@ -1,39 +1,42 @@
 import java.util.*;
 
 public class Main {
+    /*
+    k는 숫자들의 범위
+    n은 몇 번 반복했는지 = 몇 번 뽑을지 정하는 수
 
-    static List<Integer> path;
-    static int k;
+    그러므로 1~k 사이의 수를 n번 뽑아서 나올 수 있는 조합 모두를 구하는 문제.
+    */
+    static List<Integer> path = new ArrayList<>();
+
     static int n;
+    static int k;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         k = sc.nextInt();
         n = sc.nextInt();
-        // Please write your code here.
 
-        path = new ArrayList<>();
-
-        choose(1);
+        choose();
     }
 
-    static void printAnswer() {
-        for (int i = 0; i < path.size(); i++) {
-            System.out.print(path.get(i) + " ");
-        }
-        System.out.println();
-    }
-
-    static void choose(int current) {
-        if (current == n + 1) {
-            printAnswer();
+    static void choose() {
+        if (path.size() == n) {
+            printPath();
             return;
         }
 
         for (int i = 1; i <= k; i++) {
             path.add(i);
-            choose(current + 1);
+            choose();
             path.remove(path.size() - 1);
         }
+    }
+
+    static void printPath() {
+        for (int num : path) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
     }
 }
