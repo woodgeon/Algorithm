@@ -12,12 +12,15 @@ public class Main {
     static int n;
     static int k;
 
+    static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         k = sc.nextInt();
         n = sc.nextInt();
 
         choose();
+        System.out.print(sb);
     }
 
     static void choose() {
@@ -35,8 +38,8 @@ public class Main {
 
     static void printPath() {
         for (int num : path) {
-            System.out.print(num + " ");
+            sb.append(num).append(" ");
         }
-        System.out.println();
+        sb.append("\n");
     }
 }
