@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     
     static int[][] grid;
@@ -27,12 +25,22 @@ class Solution {
     }
     
     static void dfs(int current, int n) {
+        // 먼저 방문한다.
         visited[current] = true;
         
         for (int i = 0; i < n; i++) {
-            if (grid[current][i] != 0 && !visited[i]) {
+            /* 
+            만약 이번에 만난 노드가 내가 방문하지 않았던 노드이고,
+            그리고 지금 가고자 하는 위치가 1일 때
+            더 깊이, 그리고 0부터 시작한다.
+            */
+            if (!visited[i] && grid[current][i] == 1) {
                 dfs(i, n);
             }
         }
     }
 }
+
+
+
+
