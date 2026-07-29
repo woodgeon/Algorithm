@@ -1,58 +1,70 @@
 import java.util.*;
 
 class Solution {
-    private static final int[] rx = {0, 0, 1, -1};
-    private static final int[] ry = {-1, 1, 0, 0};
-
-    private static class Node {
-        int r, c;
-        public Node(int r, int c) {
-            this.r = r;
-            this.c = c;
-        }
-    }
-
+    static int[][] grid;
+    static boolean[][] visited;
+    
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+    
+    static int n;
+    static int m;
+    
     public int solution(int[][] maps) {
-        // 게임 맵의 크기를 저장하는 변수 선언
-        int N = maps.length; // 가로
-        int M = maps[0].length; // 세로
-
-        // 최단 거리를 저장할 배열 선언
-        int[][] dist = new int[N][M];
-
-        // bfs 탐색을 위한 큐 선언
-        ArrayDeque<Node> queue = new ArrayDeque<>();
-
-        // 시작 정점에 대해서 큐에 추가, 최단 거리 저장
-        queue.addLast(new Node(0, 0));
-        dist[0][0] = 1;
-
-
-        // queue가 비어있을 때 까지 반복
-        while (!queue.isEmpty()) {
-            Node now = queue.poll();
-
-            for (int i = 0; i < 4; i++) {
-                int nr = now.r + rx[i];
-                int nc = now.c + ry[i];
-                
-                if (nr < 0 || nc < 0 || nr >= N || nc >= M) {
-                    continue;
-                }
-                
-                if (maps[nr][nc] == 0) {
-                    continue;
-                }
-                
-                // 이동한 위치가 처음 방문하는 경우, 큐에 추가하고 거리 갱신
-                if (dist[nr][nc] == 0) {
-                    queue.add(new Node(nr, nc));
-                    dist[nr][nc] = dist[now.r][now.c] + 1;
-                }
-                
+        n = maps.length;
+        m = maps[0].length;
+        grid = new int[n][m];
+        visited = new boolean[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                grid[i][j] = -1;
             }
         }
+    
+        bfs(maps);
         
-        return dist[N - 1][M - 1] == 0 ? -1 : dist[N - 1][M - 1];
+        return grid[n - 1][m - 1];
+    }
+    
+    static void bfs(int[][] maps) {
+        Deque<int[]> deque = new ArrayDeque<>();
+        int count = 1;
+        visited[0][0] = true;
+        grid[0][0] = count;
+        deque.offerLast(new int[]{0, 0});
+        
+        while(!deque.isEmpty()) {
+            
+            int[] current = deque.pollFirst();
+            int cx = current[0];
+            int cy = current[1];
+            
+            for (int i = 0; i < 4; i++) {
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
+                
+                if (!isRange(nx, ny)) {
+                    continue;
+                }
+                
+                if (visited[nx][ny] || maps[nx][ny] == 0) {
+                    continue;
+                }
+                
+                visited[nx][ny] = true;
+                grid[nx][ny] = grid[cx][cy] + 1;
+                deque.offerLast(new int[]{nx, ny});
+            }
+            
+        }
+        
+    }
+    
+    static boolean isRange(int nx, int ny) {
+        return 0 <= nx && nx < n && 0 <= ny && ny < m;
     }
 }
+
+
+
+
