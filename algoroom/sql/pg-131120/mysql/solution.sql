@@ -1,4 +1,6 @@
 select MEMBER_ID, MEMBER_NAME, GENDER, DATE_OF_BIRTH
 from MEMBER_PROFILE
-where month(DATE_OF_BIRTH) = 3 and gender = 'W' and tlno is not null
-order by member_id asc;
+where GENDER = 'W'
+    and TLNO is not null
+    and month(DATE_OF_BIRTH) = 3
+order by MEMBER_ID asc;
