@@ -1,5 +1,5 @@
-select user_id, product_id
+select USER_ID, PRODUCT_ID
 from ONLINE_SALE
-group by user_id, product_id
+group by USER_ID, PRODUCT_ID
 having count(*) >= 2
-order by user_id asc, product_id desc;
+order by USER_ID asc, PRODUCT_ID desc;
