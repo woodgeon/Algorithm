@@ -4,18 +4,18 @@ with recursive family as (
     where parent_id is null
 
     union all
-    
-    select child.id, parent.generation + 1
+
+    select child.id, generation + 1
     from ecoli_data child join family parent
-    where child.parent_id = parent.id
+    on child.parent_id = parent.id
 )
 
-select count(f.id) as "COUNT", generation as "GENERATION"
+select count(*) as COUNT, f.generation as GENERATION
 from family f
 where not exists (
-    select id
+    select 1
     from ecoli_data e
     where f.id = e.parent_id
 )
 group by f.generation
-order by generation asc;
+order by GENERATION asc;
