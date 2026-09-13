@@ -5,5 +5,5 @@ select id,
         when ntile(4) over (order by size_of_colony desc) = 3 then 'MEDIUM'
         else 'LOW'
     end as "COLONY_NAME"
-from ecoli_data
+from ECOLI_DATA
 order by id asc;
