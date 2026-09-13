@@ -1,3 +1,7 @@
-select id, (select count(*) from ecoli_data where e.id = parent_id) as "CHILD_COUNT"
+select e.id as "ID", (
+    select count(*) 
+    from ecoli_data sub 
+    where sub.parent_id = e.id
+) as "CHILD_COUNT"
 from ecoli_data e
-order by id asc;
+order by e.id asc;
