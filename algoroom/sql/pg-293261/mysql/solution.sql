@@ -1,9 +1,9 @@
-select i.id, n.fish_name, i.length
-from fish_info i join fish_name_info n
-on i.fish_type = n.fish_type
+select i.ID, n.FISH_NAME, i.LENGTH
+from FISH_INFO i join FISH_NAME_INFO n
+on i.FISH_TYPE = n.FISH_TYPE
 where i.length = (
     select max(sub.length)
     from fish_info sub
-    where sub.fish_type = i.fish_type
+    where i.fish_type = sub.fish_type
 )
-order by i.id asc;
+order by id asc;
