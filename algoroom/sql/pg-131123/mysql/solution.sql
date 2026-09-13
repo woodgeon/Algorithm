@@ -1,8 +1,8 @@
-select food_type, rest_id, rest_name, favorites
-from rest_info i
-where i.favorites = (
-    select max(favorites)
-    from rest_info sub
-    where sub.food_type = i.food_type
+select i.FOOD_TYPE, i.REST_ID, i.REST_NAME, i.FAVORITES
+from REST_INFO i
+where i.FAVORITES = (
+    select max(FAVORITES)
+    from REST_INFO sub
+    where sub.FOOD_TYPE = i.FOOD_TYPE
 )
-order by food_type desc;
+order by i.FOOD_TYPE desc;
